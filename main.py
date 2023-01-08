@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from scraper.main import scrape_url
+from scraper.bbcfood import scrape_url
 
 app = FastAPI()
 
