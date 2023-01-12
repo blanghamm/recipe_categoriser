@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from scraper.bbcfood import scrape_url
+from scraper.services import scrape_url
 
 app = FastAPI()
 
@@ -9,6 +9,6 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/recipe/")
-async def get_recipe():
-    return scrape_url()
+@app.post("/recipe/")
+async def get_recipe(url: str):
+    return scrape_url(url)
