@@ -1,4 +1,5 @@
 from recipe_scrapers import scrape_me
+from utils import num
 import re
 
 
@@ -39,18 +40,10 @@ def get_quantity_and_measurement(value):
     symbol_three_quarter = re.findall(r'(\¾)', value)
     amount = fraction_ints + float_matches + symbol_half + symbol_quarter + symbol_three_quarter
     measurement_type = grams + tsp + tbsp + ml + large + medium + small + oz
-    return {"amount": None if len(amount) == 0 else _num(amount[0]), "measurement": None if len(measurement_type) == 0 else measurement_type[0].lower()}
-
-
-# TODO: extract into utils file
-def _num(s):
-    trim = s.strip()
-    if not trim.isdigit():
-        return trim
-    try:
-        return int(trim)
-    except ValueError:
-        return float(trim)
+    return {
+        "amount": None if len(amount) == 0 else num(amount[0]),
+        "measurement": None if len(measurement_type) == 0 else measurement_type[0].lower()
+    }
 
 
 def _extract_ingredients(ingredients):
