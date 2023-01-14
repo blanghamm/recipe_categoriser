@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  app:
+    container_name: recipe_cat
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    tty: true
+    volumes:
+      - ./:/opt/app/
+    ports:
+      - '8002:8002'
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - '6500:5432'
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+volumes:
+  postgres-db:
