@@ -7,7 +7,7 @@ from .database import Base
 
 
 class Recipe(Base):
-    __tablename__ = "recipes"
+    __tablename__ = "app"
 
     id = Column(Integer, primary_key=True, index=True)
     url = Column(String, unique=True, index=True)

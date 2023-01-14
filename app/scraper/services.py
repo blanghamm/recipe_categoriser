@@ -1,8 +1,7 @@
 from recipe_scrapers import scrape_me
-from uuid import uuid4
 import re
 
-from scraper.utils import num
+from app.scraper.utils import num
 
 
 def scrape_url(url) -> list:

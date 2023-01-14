@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from scraper.services import scrape_url
+from app.scraper.services import scrape_url
 
 from . import models, schemas
 

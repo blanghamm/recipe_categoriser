@@ -1,8 +1,5 @@
-import uuid
-
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from sqlalchemy.orm import Session
-from scraper.services import scrape_url
 
 from . import models, schemas
 from .database import SessionLocal, engine
