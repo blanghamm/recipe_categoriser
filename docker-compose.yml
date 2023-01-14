@@ -12,14 +12,22 @@ services:
       DB_HOST: primary_postgres
     tty: true
     volumes:
-      - ./:/opt/app/
+      - ./:/code/app/
     ports:
-      - '8002:8002'
+      - '8008:8002'
+    depends_on:
+      - primary_postgres
+
   primary_postgres:
     image: postgres:15.1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - '5442:5432'
     environment:
       POSTGRES_PASSWORD: dev
       POSTGRES_USER: dev
       POSTGRES_DB: dev
+
+volumes:
+  postgres_data:

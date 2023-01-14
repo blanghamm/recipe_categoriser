@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from . import models
+from .schemas import RecipeCreate, RecipeResponse
 from .database import SessionLocal, engine
+
+from app.scraper.services import scrape_url
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -23,9 +26,19 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/recipe/", response_model=schemas.Recipe)
-async def create_recipe(db: Session, url: str):
-    # TODO: add search query for already categorised recipe
-    db_recipe = models.Recipe(url=url)
+@app.post("/recipe/", response_model=RecipeResponse)
+def create_recipe(url: RecipeCreate, db: Session = Depends(get_db())) -> RecipeResponse:
+    scraped_recipe = scrape_url(url=url)[0]
+    db_recipe = models.Recipe(
+        title=scraped_recipe["title"],
+        url=scraped_recipe["url"],
+        ingredients=scraped_recipe["ingredients"],
+        instructions=scraped_recipe["instructions"],
+        source=scraped_recipe["source"],
+        image=scraped_recipe["image"],
+    )
 
-    return
+    db.add(db_recipe)
+    db.commit()
+    db.refresh(db_recipe)
+    return RecipeResponse(recipe=db_recipe)

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class RecipeCreate(BaseModel):
@@ -6,7 +7,7 @@ class RecipeCreate(BaseModel):
 
 
 class Ingredient(BaseModel):
-    id: int
+    # id: Optional[int]
     title: str
     quantity: dict
 
@@ -15,7 +16,7 @@ class Ingredient(BaseModel):
 
 
 class Recipe(BaseModel):
-    id: int
+    # id: Optional[int]
     url: str
     title: str
     ingredients: list[Ingredient] = []
@@ -25,3 +26,7 @@ class Recipe(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class RecipeResponse(BaseModel):
+    recipe: list[Recipe]
