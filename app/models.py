@@ -13,7 +13,7 @@ class Recipe(Base):
     instructions = Column(String)
     source = Column(String)
     image = Column(String)
-    # ingredients = Column(PickleType)
+    ingredients = Column(PickleType)
 
 
 # class Ingredient(Base):

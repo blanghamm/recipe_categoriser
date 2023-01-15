@@ -7,7 +7,6 @@ class RecipeCreate(BaseModel):
 
 
 class Ingredient(BaseModel):
-    id: Optional[int]
     title: str
     quantity: dict
 
@@ -19,7 +18,7 @@ class Recipe(BaseModel):
     id: Optional[int]
     url: str
     title: str
-    # ingredients: List
+    ingredients: List
     instructions: str
     source: str
     image: str
