@@ -1,3 +1,6 @@
+import random
+import uuid
+
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
@@ -27,12 +30,13 @@ async def root():
 
 
 @app.post("/recipe/", response_model=RecipeResponse)
-def create_recipe(url: RecipeCreate, db: Session = Depends(get_db())) -> RecipeResponse:
+def create_recipe(url: str, db: Session = Depends(get_db)) -> RecipeResponse:
     scraped_recipe = scrape_url(url=url)[0]
     db_recipe = models.Recipe(
+        id=random.randint(1,200),
         title=scraped_recipe["title"],
         url=scraped_recipe["url"],
-        ingredients=scraped_recipe["ingredients"],
+        # ingredients=scraped_recipe["ingredients"],
         instructions=scraped_recipe["instructions"],
         source=scraped_recipe["source"],
         image=scraped_recipe["image"],

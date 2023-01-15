@@ -12,9 +12,9 @@ services:
       DB_HOST: primary_postgres
     tty: true
     volumes:
-      - ./:/code/app/
+      - .:/opt
     ports:
-      - '8008:8002'
+      - '8000:8000'
     depends_on:
       - primary_postgres
 

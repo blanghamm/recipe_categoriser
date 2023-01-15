@@ -5,7 +5,7 @@ RUN apt-get update -y && \
     && apt-get clean \
     && rm -rf /var/lib/apt/list/*
 
-WORKDIR /code
+WORKDIR /opt/
 
 COPY poetry.lock ./
 COPY pyproject.toml ./
@@ -17,4 +17,4 @@ ENV PATH=/root/.local/bin:$PATH
 
 RUN poetry install --no-interaction --no-root
 
-COPY ./app /code/app
+COPY . ./
