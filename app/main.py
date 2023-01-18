@@ -1,10 +1,10 @@
 import random
-import uuid
 
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
 from . import models
+from .auth import api_key_auth
 from .schemas import RecipeCreate, RecipeResponse
 from .database import SessionLocal, engine
 
@@ -25,12 +25,12 @@ def get_db():
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+async def get_version():
+    return {"version": "0.1.0"}
 
 
-@app.post("/recipe/", response_model=RecipeResponse)
-def create_recipe(url: str, db: Session = Depends(get_db)) -> RecipeResponse:
+@app.post("/recipe/", response_model=RecipeResponse, dependencies=[Depends(api_key_auth)])
+def create_recipe(url: RecipeCreate, db: Session = Depends(get_db)) -> RecipeResponse:
     scraped_recipe = scrape_url(url=url)[0]
     db_recipe = models.Recipe(
         id=random.randint(1, 200),
