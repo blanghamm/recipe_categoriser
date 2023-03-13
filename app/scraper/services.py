@@ -4,7 +4,7 @@ import re
 from app.scraper.utils import num
 
 
-def scrape_url(url) -> list:
+def scrape_url(url: str) -> list:
     scraper = scrape_me('https://' + url)
     results = [{
         'url': str(url),

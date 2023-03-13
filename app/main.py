@@ -30,8 +30,8 @@ async def get_version():
 
 
 @app.post("/recipe/", response_model=RecipeResponse, dependencies=[Depends(api_key_auth)])
-def create_recipe(url: RecipeCreate, db: Session = Depends(get_db)) -> RecipeResponse:
-    scraped_recipe = scrape_url(url=url)[0]
+def create_recipe(url: str, db: Session = Depends(get_db)) -> RecipeResponse:
+    scraped_recipe: dict = scrape_url(url=url)[0]
     db_recipe = models.Recipe(
         id=random.randint(1, 200),
         title=scraped_recipe["title"],
