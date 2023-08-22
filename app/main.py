@@ -29,7 +29,7 @@ async def get_version():
     return {"version": "0.1.0"}
 
 
-@app.post("/recipe/", response_model=RecipeResponse, dependencies=[Depends(api_key_auth)])
+@app.post("/recipe/", response_model=RecipeResponse)
 def create_recipe(url: str, db: Session = Depends(get_db)) -> RecipeResponse:
     scraped_recipe: dict = scrape_url(url=url)[0]
     db_recipe = models.Recipe(
